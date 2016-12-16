@@ -21,6 +21,15 @@
   transition: opacity 300ms ease-in;
 }
 
+#my-clock {
+  margin-top: 30px;
+}
+
+.clock-container {
+  margin: 0 auto;
+  width: 300px;
+}
+
 .example-leave {
   opacity: 1;
 }
@@ -49,6 +58,11 @@ a {
   padding-bottom: 0px;
   color: black;
 }
+
+.info span{
+ display: block;
+}
+
 
 .sub-title {
   font-family: Jambo;
@@ -108,10 +122,13 @@ a {
   display: flex;
   height: 50px;
   width: 60px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .box {
   background-color: #FF8200;
   border-radius: 16px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
+  padding-bottom: 15px;
 }

@@ -1,20 +1,6 @@
 
 var Clock = React.createClass({
   getInitialState(){
-    var clock;
-			
-    clock = $('#clock-container').FlipClock(0, {
-	clockFace: 'MinuteCounter',
-	countdown: true,
-	autoStart: false,
-	callbacks: {
-			stop: function() {
-		        	this.changeAction();
-		        }
-		    }
-	});
-
-
 
     return {
       shortBreakTime: 3,
@@ -29,11 +15,29 @@ var Clock = React.createClass({
       currentAction: "",
       currentTimeLength: 0,
       currentInterval: {},
-      clock:clock
+      clock:{}
     };
+  },
+　　componentDidMount(){
+    var clock;
+			
+    clock = $('#my-clock').FlipClock(0, {
+	clockFace: 'MinuteCounter',
+	countdown: true,
+	autoStart: false,
+	callbacks: {
+			stop: function() {
+		        	this.changeAction();
+		        }
+		    }
+	});
+    this.setState({clock:clock})
   },
   startPomodoro(){
     this.changeAction();
+  },
+  resetPomodoro(){
+    console.log('reset');
   },
   changeAction(){
     var action = this.state.currentAction;
@@ -59,12 +63,16 @@ var Clock = React.createClass({
       <div className="box col-md-8 col-md-offset-2">
         <div className="text-center title">Pomodoro Clock</div>
 	<div className="text-center sub-title">A PRODUCTIVITY TIMER</div>
-          <Adjuster key={2} hideMenu={this.hideMenu}　shortBreakTime={this.state.shortBreakTime} longBreakTime={this.state.longBreakTime} workTime={this.state.workTime} cishu={ this.state.cishu} shortBreakMinus={this.shortBreakMinus} shortBreakPlus={this.shortBreakPlus} longBreakMinus={this.longBreakMinus} longBreakPlus={this.longBreakPlus} workTimeMinus={this.workTimeMinus} workTimePlus={this.workTimePlus} cishuMinus={this.cishuMinus} cishuPlus={this.cishuPlus} />
-      <div className="currentInfo">
+	<div className="info text-center">
         <span>Currently: {this.state.currentAction}</span>
-      </div>
+        <span>Remaining Cycles: {this.state.cishu}</span>
+        </div>
+        <Adjuster key={2} hideMenu={this.hideMenu}　shortBreakTime={this.state.shortBreakTime} longBreakTime={this.state.longBreakTime} workTime={this.state.workTime} cishu={ this.state.cishu} shortBreakMinus={this.shortBreakMinus} shortBreakPlus={this.shortBreakPlus} longBreakMinus={this.longBreakMinus} longBreakPlus={this.longBreakPlus} workTimeMinus={this.workTimeMinus} workTimePlus={this.workTimePlus} cishuMinus={this.cishuMinus} cishuPlus={this.cishuPlus} />
+      <div className="col-md-12"><div className="clock-container"><div id="my-clock"></div></div></div>
+      
       <div className="resetButtons">
-	<div className="btn btn-primary" onClick={this.startPomodoro}>Start</div>
+	<div className="btn btn-primary col-md-1 col-md-offset-5" onClick={this.startPomodoro}>Start</div>
+　　　　　　　　<div className="btn btn-warning col-md-1" onClick={this.resetPomodoro}>Reset</div>
       </div>
       </div>
       </div>
@@ -124,10 +132,8 @@ var Adjuster = React.createClass({
 	<div className="adjuster">
 	<div className="">
 
-	  <div className="title">Settings</div>
-
 	  <form　className="form col-md-12">
-	  <div className="form-group setting-group col-md-2 col-md-offset-2">
+	  <div className="form-group setting-group col-md-2 col-md-offset-2 text-center">
 	　　  <label className="control-label">Short Break</label>
 	    <div className="button-container">
 	      <div className="left-btn adjust-btn" onClick={this.props.shortBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
@@ -136,7 +142,7 @@ var Adjuster = React.createClass({
 	    </div>
 	  </div>
 
-	　　<div className="form-group setting-group col-md-2">
+	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label">Long Break</label>
 	    <div className="button-container">
 	      <div className="left-btn adjust-btn" onClick={this.props.longBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
@@ -145,7 +151,7 @@ var Adjuster = React.createClass({
 	    </div>
  	  </div>
 
-	　　<div className="form-group setting-group col-md-2">
+	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label">Work Time</label>
 	    <div className="button-container">
 	      <span className="left-btn adjust-btn" onClick={this.props.workTimeMinus}><i className="glyphicon glyphicon-minus"></i></span>
@@ -154,7 +160,7 @@ var Adjuster = React.createClass({
 	    </div>
 	  </div>
 
-	　　<div className="form-group setting-group col-md-2">
+	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label"># of Times</label>
 	    <div className="button-container">
 	      <span className="left-btn adjust-btn" onClick={this.props.cishuMinus}><i className="glyphicon glyphicon-minus"></i></span>
@@ -165,8 +171,6 @@ var Adjuster = React.createClass({
 	  </form>
 	</div>
 	</div>
-
-
     )
   }
 })
