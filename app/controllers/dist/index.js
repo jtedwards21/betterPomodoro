@@ -8,26 +8,21 @@ var Clock = React.createClass({
       workTime: 25,
       cishu: 4,
       timesLeft: 4,
-      menu: false,
-      endTime: 0,
-      minutes: 0,
-      seconds: 0,
-      currentAction: "",
-      currentTimeLength: 0,
-      currentInterval: {},
-      clock:{}
+      currentAction: "Off",
+      clock:{},
+      active: false
     };
   },
 　　componentDidMount(){
     var clock;
-			
+    var that = this;
     clock = $('#my-clock').FlipClock(0, {
 	clockFace: 'MinuteCounter',
 	countdown: true,
 	autoStart: false,
 	callbacks: {
 			stop: function() {
-		        	this.changeAction();
+		        	if(that.state.active == true){that.changeAction();}
 		        }
 		    }
 	});
@@ -37,24 +32,31 @@ var Clock = React.createClass({
     this.changeAction();
   },
   resetPomodoro(){
-    console.log('reset');
+    this.setState({
+      timesLeft: this.state.cishu,
+      currentAction: "Off",
+      active: false})
+    
+    this.state.clock.setTime(this.state.workTime * 60);
+    this.state.clock.stop();
   },
   changeAction(){
     var action = this.state.currentAction;
-　　　　if(action == ""){
+　　　　if(action == "Off"){
       this.state.clock.setTime(this.state.workTime * 60);
       this.state.clock.start();
-      this.setState({currentAction: "workTime"});
-    }  else if(action == "workTime" && this.state.timesLeft !== 0){
+      this.setState({currentAction: "Working", active: true});
+    }  else if(action == "Working" && this.state.timesLeft !== 0){
+         var t = this.state.timesLeft;
          this.state.clock.setTime(this.state.shortBreakTime * 60);
          this.state.clock.start();
-	 this.setState({currentAction: "shortBreakTime"});
-       } else if(action == "shortBreakTime"){
+	 this.setState({currentAction: "Taking a Short Break", timesLeft: t-1});
+       } else if(action == "Taking a Short Break"){
             this.state.clock.setTime(this.state.workTime * 60);
             this.state.clock.start();
-	    this.setState({currentAction: "workTime"})
-         } else if(action == "workTime" && this.state.timesLeft == 0){
-		this.setState({currentAction: "Finished!!"});
+	    this.setState({currentAction: "Working"})
+         } else if(action == "Working" && this.state.timesLeft == 0){
+		this.setState({currentAction: "Off"});
 	   }
   },
   render() {
@@ -65,14 +67,16 @@ var Clock = React.createClass({
 	<div className="text-center sub-title">A PRODUCTIVITY TIMER</div>
 	<div className="info text-center">
         <span>Currently: {this.state.currentAction}</span>
-        <span>Remaining Cycles: {this.state.cishu}</span>
+        <span>Remaining Cycles: {this.state.timesLeft}</span>
         </div>
         <Adjuster key={2} hideMenu={this.hideMenu}　shortBreakTime={this.state.shortBreakTime} longBreakTime={this.state.longBreakTime} workTime={this.state.workTime} cishu={ this.state.cishu} shortBreakMinus={this.shortBreakMinus} shortBreakPlus={this.shortBreakPlus} longBreakMinus={this.longBreakMinus} longBreakPlus={this.longBreakPlus} workTimeMinus={this.workTimeMinus} workTimePlus={this.workTimePlus} cishuMinus={this.cishuMinus} cishuPlus={this.cishuPlus} />
       <div className="col-md-12"><div className="clock-container"><div id="my-clock"></div></div></div>
       
-      <div className="resetButtons">
-	<div className="btn btn-primary col-md-1 col-md-offset-5" onClick={this.startPomodoro}>Start</div>
-　　　　　　　　<div className="btn btn-warning col-md-1" onClick={this.resetPomodoro}>Reset</div>
+      <div className="bottom-button-container">
+        <div className="my-buttons">
+	  <div className="btn btn-primary" onClick={this.startPomodoro}>Start</div>
+　　　　　　　　  <div className="btn btn-warning" onClick={this.resetPomodoro}>Reset</div>
+	</div>
       </div>
       </div>
       </div>
