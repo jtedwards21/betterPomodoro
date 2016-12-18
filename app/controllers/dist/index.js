@@ -29,7 +29,8 @@ var Clock = React.createClass({
     this.setState({clock:clock})
   },
   startPomodoro(){
-    this.changeAction();
+    if(this.state.currentAction == "Off"){
+    this.changeAction();}
   },
   resetPomodoro(){
 　　　　console.log('check');
@@ -71,6 +72,21 @@ var Clock = React.createClass({
      }
   },
   render() {
+    var on = {cursor: "pointer"}
+    var off = {cursor: "default"}
+    var startCursor;
+    var stopCursor;
+    var adjustCursor;
+    if(this.state.currentAction == "Off"){
+	startCursor = on;
+        stopCursor = off;
+        adjustCursor = on;
+    } else {
+	stopCursor = on;
+        startCursor = off;
+	adjustCursor = off;
+    }
+
     return (
       <div　className="row">
       <div className="box col-md-8 col-md-offset-2">
@@ -80,13 +96,13 @@ var Clock = React.createClass({
         <span>Currently: {this.state.currentAction}</span>
         <span>Remaining Cycles: {this.state.timesLeft}</span>
         </div>
-        <Adjuster key={2} hideMenu={this.hideMenu}　shortBreakTime={this.state.shortBreakTime} longBreakTime={this.state.longBreakTime} workTime={this.state.workTime} cishu={ this.state.cishu} shortBreakMinus={this.shortBreakMinus} shortBreakPlus={this.shortBreakPlus} longBreakMinus={this.longBreakMinus} longBreakPlus={this.longBreakPlus} workTimeMinus={this.workTimeMinus} workTimePlus={this.workTimePlus} cishuMinus={this.cishuMinus} cishuPlus={this.cishuPlus} />
+        <Adjuster adjustCursor={adjustCursor} key={2} hideMenu={this.hideMenu}　shortBreakTime={this.state.shortBreakTime} longBreakTime={this.state.longBreakTime} workTime={this.state.workTime} cishu={ this.state.cishu} shortBreakMinus={this.shortBreakMinus} shortBreakPlus={this.shortBreakPlus} longBreakMinus={this.longBreakMinus} longBreakPlus={this.longBreakPlus} workTimeMinus={this.workTimeMinus} workTimePlus={this.workTimePlus} cishuMinus={this.cishuMinus} cishuPlus={this.cishuPlus} />
       <div className="col-md-12"><div className="clock-container"><div id="my-clock"></div></div></div>
       
       <div className="bottom-button-container">
         <div className="my-buttons">
-	  <div className="btn btn-primary" onClick={this.startPomodoro}>Start</div>
-　　　　　　　　  <div className="btn btn-warning" onClick={this.resetPomodoro}>Reset</div>
+	  <div className="btn btn-primary" style={startCursor} onClick={this.startPomodoro}>Start</div>
+　　　　　　　　  <div className="btn btn-warning" style={stopCursor} onClick={this.resetPomodoro}>Stop</div>
 	</div>
       </div>
       </div>
@@ -95,43 +111,51 @@ var Clock = React.createClass({
   },
   shortBreakMinus(event) {
     var n = this.state.shortBreakTime;
+    if(n !== 0 && this.state.currentAction == "Off"){
     n = n - 1;
-    this.setState({shortBreakTime:n});
+    this.setState({shortBreakTime:n});}
   },
   shortBreakPlus(event) {
     var n = this.state.shortBreakTime;
+    if(this.state.currentAction == "Off"){
     n = n + 1;
-    this.setState({shortBreakTime:n});
+    this.setState({shortBreakTime:n});}
   },
   longBreakMinus(event) {
     var n = this.state.longBreakTime;
+    if(n !== 0 && this.state.currentAction == "Off"){
     n = n - 1;
-    this.setState({longBreakTime:n});
+    this.setState({longBreakTime:n});}
   },
   longBreakPlus(event) {
     var n = this.state.longBreakTime;
+    if(this.state.currentAction == "Off"){
     n = n + 1;
-    this.setState({longBreakTime:n});
+    this.setState({longBreakTime:n});}
   },
   workTimeMinus(event) {
     var n = this.state.workTime;
+    if(n !== 0 && this.state.currentAction == "Off"){
     n = n - 1;
-    this.setState({workTime:n});
+    this.setState({workTime:n});}
   },
   workTimePlus(event) {
     var n = this.state.workTime;
+    if(this.state.currentAction == "Off"){
     n = n + 1;
-    this.setState({workTime:n});
+    this.setState({workTime:n});}
   },
   cishuMinus(event) {
     var n = this.state.cishu;
+    if(n !== 0 && this.state.currentAction == "Off"){
     n = n - 1;
-    this.setState({cishu:n});
+    this.setState({cishu:n});}
   },
   cishuPlus(event) {
     var n = this.state.cishu;
+    if(this.state.currentAction == "Off"){
     n = n + 1;
-    this.setState({cishu:n});
+    this.setState({cishu:n});}
   }
 })
 
@@ -151,36 +175,36 @@ var Adjuster = React.createClass({
 	  <div className="form-group setting-group col-md-2 col-md-offset-2 text-center">
 	　　  <label className="control-label">Short Break</label>
 	    <div className="button-container">
-	      <div className="left-btn adjust-btn" onClick={this.props.shortBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
+	      <div style={this.props.adjustCursor} className="left-btn adjust-btn" onClick={this.props.shortBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
               <div className="display-number">{this.props.shortBreakTime}</div>
-	      <div className="right-btn adjust-btn"  onClick={this.props.shortBreakPlus}><i className="glyphicon glyphicon-plus"></i></div>
+	      <div style={this.props.adjustCursor} className="right-btn adjust-btn"  onClick={this.props.shortBreakPlus}><i className="glyphicon glyphicon-plus"></i></div>
 	    </div>
 	  </div>
 
 	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label">Long Break</label>
 	    <div className="button-container">
-	      <div className="left-btn adjust-btn" onClick={this.props.longBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
+	      <div style={this.props.adjustCursor} className="left-btn adjust-btn" onClick={this.props.longBreakMinus}><i className="glyphicon glyphicon-minus"></i></div>
               <div className="display-number">{this.props.longBreakTime}</div>
-	      <div className="right-btn adjust-btn"  onClick={this.props.longBreakPlus}><i className="glyphicon glyphicon-plus"></i></div>
+	      <div style={this.props.adjustCursor} className="right-btn adjust-btn"  onClick={this.props.longBreakPlus}><i className="glyphicon glyphicon-plus"></i></div>
 	    </div>
  	  </div>
 
 	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label">Work Time</label>
 	    <div className="button-container">
-	      <span className="left-btn adjust-btn" onClick={this.props.workTimeMinus}><i className="glyphicon glyphicon-minus"></i></span>
+	      <span style={this.props.adjustCursor} className="left-btn adjust-btn" onClick={this.props.workTimeMinus}><i className="glyphicon glyphicon-minus"></i></span>
               <div className="display-number">{this.props.workTime}</div>
-	      <span className="right-btn adjust-btn"  onClick={this.props.workTimePlus}><i className="glyphicon glyphicon-plus"></i></span>
+	      <span style={this.props.adjustCursor} className="right-btn adjust-btn"  onClick={this.props.workTimePlus}><i className="glyphicon glyphicon-plus"></i></span>
 	    </div>
 	  </div>
 
 	　　<div className="form-group setting-group col-md-2 text-center">
 	　　  <label className="control-label"># of Times</label>
 	    <div className="button-container">
-	      <span className="left-btn adjust-btn" onClick={this.props.cishuMinus}><i className="glyphicon glyphicon-minus"></i></span>
+	      <span style={this.props.adjustCursor} className="left-btn adjust-btn" onClick={this.props.cishuMinus}><i className="glyphicon glyphicon-minus"></i></span>
               <div className="display-number">{this.props.cishu}</div>
-	      <span className="right-btn adjust-btn"  onClick={this.props.cishuPlus}><i className="glyphicon glyphicon-plus"></i></span>
+	      <span style={this.props.adjustCursor} className="right-btn adjust-btn"  onClick={this.props.cishuPlus}><i className="glyphicon glyphicon-plus"></i></span>
 	    </div>
 	  </div>
 	  </form>
