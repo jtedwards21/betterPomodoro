@@ -30,16 +30,17 @@ var Clock = React.createClass({
   },
   startPomodoro(){
     if(this.state.currentAction == "Off"){
+    this.setState({timesLeft: this.state.cishu});
     this.changeAction();}
   },
   resetPomodoro(){
 　　　　console.log('check');
     this.setState({
-      timesLeft: this.state.cishu,
       currentAction: "Off",
-      active: false})
+      active: false,
+      timesLeft: 0})
     
-    this.state.clock.setTime(this.state.workTime * 60);
+    this.state.clock.setTime(0);
     this.state.clock.stop();
   },
   changeAction(){
@@ -101,8 +102,8 @@ var Clock = React.createClass({
       
       <div className="bottom-button-container">
         <div className="my-buttons">
-	  <div className="btn btn-primary" style={startCursor} onClick={this.startPomodoro}>Start</div>
-　　　　　　　　  <div className="btn btn-warning" style={stopCursor} onClick={this.resetPomodoro}>Stop</div>
+	  <div className="start-button" style={startCursor} onClick={this.startPomodoro}>Start</div>
+　　　　　　　　  <div className="stop-button" style={stopCursor} onClick={this.resetPomodoro}>Stop</div>
 	</div>
       </div>
       </div>
@@ -111,7 +112,7 @@ var Clock = React.createClass({
   },
   shortBreakMinus(event) {
     var n = this.state.shortBreakTime;
-    if(n !== 0 && this.state.currentAction == "Off"){
+    if(n !== 1 && this.state.currentAction == "Off"){
     n = n - 1;
     this.setState({shortBreakTime:n});}
   },
@@ -123,7 +124,7 @@ var Clock = React.createClass({
   },
   longBreakMinus(event) {
     var n = this.state.longBreakTime;
-    if(n !== 0 && this.state.currentAction == "Off"){
+    if(n !== 1 && this.state.currentAction == "Off"){
     n = n - 1;
     this.setState({longBreakTime:n});}
   },
@@ -135,7 +136,7 @@ var Clock = React.createClass({
   },
   workTimeMinus(event) {
     var n = this.state.workTime;
-    if(n !== 0 && this.state.currentAction == "Off"){
+    if(n !== 1 && this.state.currentAction == "Off"){
     n = n - 1;
     this.setState({workTime:n});}
   },
@@ -147,7 +148,7 @@ var Clock = React.createClass({
   },
   cishuMinus(event) {
     var n = this.state.cishu;
-    if(n !== 0 && this.state.currentAction == "Off"){
+    if(n !== 1 && this.state.currentAction == "Off"){
     n = n - 1;
     this.setState({cishu:n});}
   },
