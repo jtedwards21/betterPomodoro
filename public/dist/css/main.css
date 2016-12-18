@@ -12,6 +12,13 @@
   src: url("Denominator.ttf") format('truetype');
 }
 
+#background {
+  display: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: #402000;
+}
+
 .example-enter {
   opacity: 0.01;
 }
@@ -154,6 +161,7 @@ a {
 }
 
 .box {
+  margin-top: 20vh;
   background-color: #FF8200;
   border-radius: 16px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);

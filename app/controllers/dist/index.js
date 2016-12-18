@@ -32,6 +32,7 @@ var Clock = React.createClass({
     this.changeAction();
   },
   resetPomodoro(){
+　　　　console.log('check');
     this.setState({
       timesLeft: this.state.cishu,
       currentAction: "Off",
@@ -42,22 +43,32 @@ var Clock = React.createClass({
   },
   changeAction(){
     var action = this.state.currentAction;
+    var next;
 　　　　if(action == "Off"){
-      this.state.clock.setTime(this.state.workTime * 60);
-      this.state.clock.start();
-      this.setState({currentAction: "Working", active: true});
+      next = "Start Working";
     }  else if(action == "Working" && this.state.timesLeft !== 0){
-         var t = this.state.timesLeft;
-         this.state.clock.setTime(this.state.shortBreakTime * 60);
-         this.state.clock.start();
-	 this.setState({currentAction: "Taking a Short Break", timesLeft: t-1});
+         next = "Start a Short Break";
        } else if(action == "Taking a Short Break"){
-            this.state.clock.setTime(this.state.workTime * 60);
-            this.state.clock.start();
-	    this.setState({currentAction: "Working"})
+            next = "Start Working";
          } else if(action == "Working" && this.state.timesLeft == 0){
-		this.setState({currentAction: "Off"});
+	    next = "Turn Off";
 	   }
+     switch(next){
+	case "Start Working":
+	  this.state.clock.setTime(this.state.workTime * 60);
+          this.state.clock.start();
+          this.setState({currentAction: "Working", active: true});
+	  break;
+	case "Start Short Break":
+	  var t = this.state.timesLeft;
+          this.state.clock.setTime(this.state.shortBreakTime * 60);
+          this.state.clock.start();
+	  this.setState({currentAction: "Taking a Short Break", timesLeft: t-1});
+	  break;
+        case "Turn Off":
+	  this.setState({currentAction: "Off"});
+	  break;
+     }
   },
   render() {
     return (
