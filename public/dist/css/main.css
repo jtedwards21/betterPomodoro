@@ -12,6 +12,30 @@
   src: url("Denominator.ttf") format('truetype');
 }
 
+
+#github-img{
+  width: 50px;
+}
+
+a {
+  color: black;
+}
+
+#github-container{
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  float:none;
+  margin-top: 50px;
+　　display: flex;
+}
+
+#github-container p {
+  line-height: 25px;
+  font-family: Denominator;
+  font-size: 1.5em;
+}
+
 #background {
   display: absolute;
   height: 100vh;
@@ -167,6 +191,8 @@ background: linear-gradient(to bottom, #333333 0%,#494949 35%,#545454 65%,#6d6d6
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#6d6d6d',GradientType=0 ); /* IE6-9 */
   color: white;
 }
+
+
 
 .stop-button {
   padding-left: 8px;
