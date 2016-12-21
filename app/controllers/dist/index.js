@@ -107,7 +107,7 @@ var Clock = React.createClass({
 	</div>
       </div>
 　　　　　　
-<div id="link-container" className="text-center"><a href="https://github.com/jtedwards21/calculator" id="github-container"><p>Check out the code on github</p></a></div>
+<div id="link-container" className="text-center"><a href="https://github.com/jtedwards21/betterPomodoro" id="github-container"><p>Check out the code on github</p></a></div>
       </div>
       </div>
     );
