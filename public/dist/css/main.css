@@ -12,8 +12,12 @@
   src: url("Denominator.ttf") format('truetype');
 }
 
+#r {
+  width: 98%;
+}
+
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 30px;
@@ -25,10 +29,11 @@
 
 #github-container p {
   font-family: Denominator;
-  font-size: 1.5em;
+  font-size: 2em;
   text-align: center;
   color: white;
 }
+
 #background {
   display: absolute;
   height: 100vh;
