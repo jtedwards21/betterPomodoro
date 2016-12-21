@@ -106,6 +106,8 @@ var Clock = React.createClass({
 　　　　　　　　  <div className="stop-button" style={stopCursor} onClick={this.resetPomodoro}>Stop</div>
 	</div>
       </div>
+　　　　　　
+<div id="link-container" className="text-center"><a href="https://github.com/jtedwards21/calculator" id="github-container"><p>Check out the code on github</p></a></div>
       </div>
       </div>
     );

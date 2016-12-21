@@ -12,28 +12,35 @@
   src: url("Denominator.ttf") format('truetype');
 }
 
-.ab {
-  position: absolute;
-  width: 100vw;
-  height: 50px;
-}
 
 #github-img{
   width: 50px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 a {
   color: black;
 }
 
-
-#github-container p {
-  font-family: Denominator;
-  font-size: 1.5em;
+#link-container {
+　　text-align: center;
 }
 
+#github-container{
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  float:none;
+　　text-align: center;
+  margin-top: 50px;
+　　display: flex;
+}
+
+#github-container p {
+  line-height: 25px;
+  font-family: Denominator;
+  font-size: 1.5em;
+  display: inline;
+}
 #background {
   display: absolute;
   height: 100vh;
